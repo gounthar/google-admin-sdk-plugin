@@ -23,12 +23,8 @@ import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class GoogleAdminService {
-
-  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   private final String applicationName = "Google Admin Service @ Jenkins";
 
@@ -50,18 +46,18 @@ public class GoogleAdminService {
   );
 
 
-  GoogleAdminService(String credentialsFolder, String clientSecretFile) throws GeneralSecurityException, IOException {
+  GoogleAdminService(String credentialsFolder, String clientSecretFile, String adminAccountEmail) throws GeneralSecurityException, IOException {
     this.credentialsFolder = credentialsFolder;
     this.clientSecretFile = clientSecretFile;
 
     final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
     service = new Directory
-        .Builder(httpTransport, jsonFactory, getCredentials(httpTransport))
+        .Builder(httpTransport, jsonFactory, getCredentials(httpTransport, adminAccountEmail))
         .setApplicationName(applicationName).build();
   }
 
-  private Credential getCredentials(final NetHttpTransport httpTransport) throws IOException {
+  private Credential getCredentials(final NetHttpTransport httpTransport, String adminAccountEmail) throws IOException {
     InputStream in = new FileInputStream(clientSecretFile);
     GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(jsonFactory, new InputStreamReader(in, StandardCharsets.UTF_8));
 
@@ -70,17 +66,14 @@ public class GoogleAdminService {
         .setDataStoreFactory(new FileDataStoreFactory(new java.io.File(credentialsFolder)))
         .setAccessType("offline").build();
 
-    return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
+    return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize(adminAccountEmail);
   }
 
   public List<String> getGroupMembers(String groupKey) throws IOException {
     Members members = service.members().list(groupKey).execute();
     if (members == null || members.size() == 0) {
-      logger.info("No member found.");
         return new ArrayList<>();
     } else {
-      logger.info("Group size: {}", members.size());
-
       List<String> emails = new ArrayList<>();
       for (Member member : members.getMembers()) {
         emails.add(member.getEmail());
@@ -91,10 +84,10 @@ public class GoogleAdminService {
 
 //  public static void main(String[] args) {
 //    try {
-//      List<String> members = new GoogleAdminService("", "").getGroupMembers("dev");
+//      List<String> members = new GoogleAdminService(".credentials/", ".credentials/credentials.json", "admin@test.com").getGroupMembers("group@test.com");
 //      System.out.println(members);
 //    } catch (Exception e) {
-//      System.out.println("erroa");
+//      System.out.println("error");
 //      e.printStackTrace();
 //    }
 //  }
