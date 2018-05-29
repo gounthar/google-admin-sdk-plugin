@@ -28,7 +28,7 @@ public class GoogleAdminService {
       DirectoryScopes.ADMIN_DIRECTORY_GROUP_READONLY
   );
 
-  GoogleAdminService(String credentialsFolder, String clientSecretFile, String adminAccountEmail) throws GeneralSecurityException, IOException {
+  GoogleAdminService(String clientSecretFile, String adminAccountEmail) throws GeneralSecurityException, IOException {
 
     final String applicationName = "Google Admin Service @ Jenkins";
     final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
@@ -64,7 +64,7 @@ public class GoogleAdminService {
 
 //  public static void main(String[] args) {
 //    try {
-//      List<String> members = new GoogleAdminService(".credentials/", ".credentials/credentials.json", "admin@test.com").getGroupMembers("group@test.com");
+//      List<String> members = new GoogleAdminService(".credentials/credentials.json", "admin@test.com").getGroupMembers("group@test.com");
 //      System.out.println(members);
 //    } catch (Exception e) {
 //      System.out.println("error");
