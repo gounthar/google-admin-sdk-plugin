@@ -19,8 +19,6 @@ import java.util.List;
 
 public class GoogleAdminService {
 
-  private final String applicationName = "Google Admin Service @ Jenkins";
-
   private final JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
 
   private final Directory service;
@@ -32,6 +30,7 @@ public class GoogleAdminService {
 
   GoogleAdminService(String credentialsFolder, String clientSecretFile, String adminAccountEmail) throws GeneralSecurityException, IOException {
 
+    final String applicationName = "Google Admin Service @ Jenkins";
     final NetHttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
     InputStream in = new FileInputStream(clientSecretFile);
     GoogleCredential credential = GoogleCredential.fromStream(in, httpTransport, jsonFactory).createScoped(scopes);
