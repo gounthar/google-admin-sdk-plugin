@@ -37,4 +37,5 @@ def service = new Directory.Builder(HTTP_TRANSPORT, JSON_FACTORY, flow)
         .setApplicationName(APPLICATION_NAME)
         .build()
 
+final groupMembers = new GoogleAdminService()
 
