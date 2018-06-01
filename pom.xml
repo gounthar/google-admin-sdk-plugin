@@ -16,6 +16,13 @@
     <name>Google Cloud SDK Plugin</name>
     <description>Google Cloud SDK shared libraries plugin</description>
     <url>https://github.com/google-cloud-tools/google-admin-sdk-plugin</url>
+    <developers>
+      <developer>
+        <id>yacut</id>
+        <name>Roman Rogozhnikov</name>
+        <email>roman.rogozhnikov@gmail.com</email>
+      </developer>
+    </developers>
     <licenses>
         <license>
             <name>MIT License</name>
