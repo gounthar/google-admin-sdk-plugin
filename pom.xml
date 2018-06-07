@@ -13,8 +13,8 @@
     <properties>
         <jenkins.version>2.7.3</jenkins.version>
     </properties>
-    <name>Google Cloud SDK Plugin</name>
-    <description>Google Cloud SDK shared libraries plugin</description>
+    <name>Google Admin SDK Plugin</name>
+    <description>Google Admin SDK shared libraries plugin</description>
     <url>https://wiki.jenkins.io/display/JENKINS/Google+Admin+SDK+Plugin</url>
     <developers>
       <developer>
