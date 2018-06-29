@@ -56,7 +56,16 @@ public class GoogleAdminService {
     } else {
       List<String> emails = new ArrayList<>();
       for (Member member : members.getMembers()) {
-        emails.add(member.getEmail());
+        if(member.getType().contains("GROUP")) {
+          List<String> groupEmails = getGroupMembers(member.getEmail());
+          for (String groupEmail :groupEmails) {
+            if(!emails.contains(groupEmail)) {
+              emails.add(groupEmail);
+            }
+          }
+        } else {
+          emails.add(member.getEmail());
+        }
       }
       return emails;
     }
