@@ -64,7 +64,10 @@ public class GoogleAdminService {
             }
           }
         } else {
-          emails.add(member.getEmail());
+          String memberEmail = member.getEmail();
+          if(!emails.contains(memberEmail)) {
+            emails.add(memberEmail);
+          }
         }
       }
       return emails;
